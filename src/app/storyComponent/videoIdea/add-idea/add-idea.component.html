@@ -3,20 +3,47 @@
     <div class="col-md-6 mx-auto">
       <div class="card card-body">
         <h3 class="text-center">Add Your Ideas</h3>
-        <form action="/users/register" method="post">
+        <form [formGroup]="addForm" (ngSubmit)="submit(addForm)" method="post">
           <div class="form-group">
             <label for="name">Topic</label>
-            <input type="text" class="form-control" name="topic" value="" required>
+            <input type="text" class="form-control" formControlName="topic" name="topic" required [ngClass]="{'is-invalid': (topic.errors && topic.touched) || errors.topic}">
+            <div class="form-text text-danger" *ngIf="topic.errors?.['required'] && (topic.dirty || topic.touched)" >
+              Topic is Required.
+            </div>
+            <div class="form-text text-danger" *ngIf="topic.errors?.['minlength'] && (topic.dirty || topic.touched)">
+              Topic should be at least 10 characters long.
+            </div>
+            <div class="form-text text-danger" *ngIf="errors.topic">
+              {{errors.topic}}
+            </div>
           </div>
           <div class="form-group">
             <label for="title">Title</label>
-            <input type="text" name="title" class="form-control" value="" required>
+            <input type="text" name="title" class="form-control" formControlName="title" [ngClass]="{'is-invalid': (title.errors && title.touched) || errors.title}">
+            <div class="form-text text-danger" *ngIf="title.errors?.['required'] && (title.dirty || title.touched)">
+              Title is Required.
+            </div>
+            <div class="form-text text-danger" *ngIf="title.errors?.['minlength'] && (title.dirty || title.touched)">
+              Topic should be at least 10 and maximum  characters long.
+            </div>
+            <div class="form-text text-danger" *ngIf="errors.title">
+              {{errors.title}}
+            </div>
           </div>
           <div class="form-group">
-            <label for="description">Description</label>
-            <textarea type="tet" name="description" class="form-control" value="" required></textarea>
+            <label for="details">Description</label>
+            <textarea type="text" name="details" class="form-control" formControlName="details"  [ngClass]="{'is-invalid': (details.errors && details.touched) || errors.details}"></textarea>
+           <div class="form-text text-danger" *ngIf="details.errors?.['required'] && (details.dirty || details.touched)">
+              details is Required.
+            </div>
+            <div class="form-text text-danger" *ngIf="details.errors?.['minlength'] && (details.dirty || details.touched)">
+              details should be at least 60 characters long.
+            </div>
+            <div class="form-text text-danger" *ngIf="errors.details">
+              {{errors.details}}
+            </div>
           </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" [disabled]="addForm.invalid" class="btn btn-primary">Submit</button>
         </form>
       </div>
     </div>

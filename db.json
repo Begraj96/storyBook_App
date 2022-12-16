@@ -1,0 +1,26 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "loginUsers": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    },
+    {
+      "name": "verma",
+      "email": "verma@gmail.com",
+      "pwd": "123456",
+      "cpwd": "123456",
+      "id": 2
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}

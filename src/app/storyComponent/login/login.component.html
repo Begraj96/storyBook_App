@@ -1,20 +1,47 @@
-
 <div class="row">
-    <div class="col-md-6 mx-auto">
-      <div class="card card-body">
-        <img class="logo" src="../../../assets/logo.png">
-        <h3 class="text-center">Account Login</h3>
-        <form method="post" action="/users/login">
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" name="email" class="form-control" required>
+  <div class="col-md-6 mx-auto">
+    <div class="card card-body">
+      <img class="logo" src="../../../assets/logo.png">
+      <h3 class="text-center">Account Login</h3>
+      <form [formGroup]="loginForm" (ngSubmit)="loginSubmited(loginForm)" method="post" action="/login">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" name="email" class="form-control" formControlName="email" [ngClass]="{'is-invalid': (email.errors && email.touched) || errors.email}" required="" (keydown)="onKeyDown('email')" />
+          <div class="form-text text-danger" *ngIf="email.errors?.['required'] && (email.dirty || email.touched)">
+            Email is Required.
           </div>
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" name="password" class="form-control" required>
+          <div class="form-text text-danger" *ngIf="email.errors?.['email'] && (email.dirty || email.touched)">
+            Email is Invalid.
           </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+          <div class="form-text text-danger" *ngIf="errors.email">
+            {{errors.email}}
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" name="password" class="form-control" formControlName="password" [ngClass]="{'is-invalid': (password.errors && password.touched) || errors.password}" required="" (keydown)="onKeyDown('password')">
+          <div class="form-text text-danger" *ngIf="password.errors?.['required'] && (password.dirty || password.touched)">
+            Password id Required.
+          </div>
+          <div class="form-text text-danger" *ngIf="password.errors?.['minlength'] && (password.dirty || password.touched)">
+            Password should be at least 6 and at the max 15 characters long.
+          </div>
+          <div class="form-text text-danger" *ngIf="errors.password">
+            {{errors.password}}
+          </div>
+        </div>                                                                                                                                                                                                                 
+
+       <div class="row">
+        <div class="col-6 offset-3">
+          <button type="submit" [disabled]="loginForm.invalid" class="btn btn-primary">Submit</button>
+        </div>
+       </div>
+
+       <div class="col mt-3">
+        <span class="me-2">Don't have Account?</span><a routerLink="/register">Register</a>
       </div>
+      </form>
     </div>
   </div>
+</div>
+

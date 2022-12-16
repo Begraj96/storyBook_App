@@ -3,24 +3,64 @@
       <div class="card card-body">
         <img class="logo" src="../../../assets/logo.png">
         <h3 class="text-center">Account Register</h3>
-        <form action="/users/register" method="post">
+        <form [formGroup]="registerForm" (ngSubmit)="registerSubmited(registerForm)" action="/register" method="post">
           <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" class="form-control" name="name" value="" required>
+            <input type="text" class="form-control" name="name" id="name" formControlName="name" [ngClass]="{'is-invalid': (name.errors && name.touched) || (errors.name)}" value="" required>
+            <div class="form-text text-danger" *ngIf="name.errors?.['required'] && (name.touched || name.dirty)">
+               Name is Required.
+            </div>
+            <div class="form-text text-danger" *ngIf="name.errors?.['minlength'] && (name.touched || name.dirty)">
+               Name is too short. 
+            </div>
+            <div class="form-text text-danger" *ngIf="name.errors?.['pattern'] && (name.dirty || name.touched)">
+              Name should start with Alphabet.
+            </div>
+            <div class="form-text text-danger" *ngIf="errors.name">
+              {{errors.name}}
+            </div>
           </div>
           <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" name="email" class="form-control" value="" required>
+            <input type="email" name="email" class="form-control" id="email" formControlName="email" [ngClass]="{'is-invalid': (email.errors && email.touched) || (errors.email)}" (keydown)="onKeyDown('email')" value="" required>
+          <div class="form-text text-danger" *ngIf="email.errors?.['required'] && (email.dirty || email.touched)">
+            Email is Required.
+          </div>
+          <div class="form-text text-danger" *ngIf="email.errors?.['email'] && (email.dirty || email.touched)">
+            Email id Invalid.
+          </div>
+          <div class="form-text text-danger" *ngIf="errors.email">
+            {{errors.email}}
+          </div>
           </div>
           <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" name="password" class="form-control" value="" required>
+            <input type="password" name="password" class="form-control" id="password" formControlName="password" [ngClass]="{'is-invalid': (password.errors && password.touched) || (errors.password)}" value="" required>
+         <div class="form-text text-danger" *ngIf="password.errors?.['required'] && (password.dirty || password.touched)">
+          Password is Required.
+         </div>
+         <div class="form-text text-danger" *ngIf="password.errors?.['minlength'] || password.errors?.['maxlength'] && (password.dirty || password.touched)">
+          Password should be at least 6 and at the max 15 characters long.
+         </div>
+         <div class="form-text text-danger" *ngIf="errors.password">
+          {{errors.password}}
+         </div>
           </div>
           <div class="form-group">
             <label for="password2">Confirm Password</label>
-            <input type="password" name="password2" class="form-control" value="" required>
+            <input type="password" name="password2" class="form-control" id="password2" formControlName="password2"  [ngClass]="{'is-invalid': (password2.errors && password2.touched) || (errors.password2)}" value="" required>
+         <div class="form-text text-danger" [ngStyle]="{'display': confirmPass}">
+          Repeat pass is Invalid.
+         </div>
+         <div class="form-text text-danger" *ngIf="errors.password2">
+          {{errors.password2}}
+         </div>
           </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" [disabled]="registerForm.invalid" class="btn btn-primary">Submit</button>
+       
+          <div class="col mt-3">
+            <span class="me-2">Already have Account?</span><a routerLink="/login">Login</a>
+          </div>
         </form>
       </div>
     </div>

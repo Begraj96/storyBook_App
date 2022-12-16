@@ -1,5 +1,24 @@
-<div class="jumbotron text-center">
-    <h1 class="display-6">Motivational Video</h1>
-    <p class="lead">Jot down ideas for your next YouTube videos...</p>
-    <a href="/motivational" class="btn btn-dark btn-lg">Description</a>
+<ng-container *ngIf="ideaList.length > 0;  then Done; else notDone">
+</ng-container>
+
+<ng-template #Done>
+  <div *ngFor="let item of ideaList" class="card align-items-center card-body mb-2">
+    <h3>{{item.topic}}</h3>
+    <h5>{{item.title}}</h5>
+    <p>{{item.details}}</p>
+    <div class="btn-toolbar">
+      <button (click)="deletebtn(item._id)" class="btn-group mr-2 my-2 btn btn-danger">DELETE</button>
+      <button routerLink="/ideas-update/{{item._id}}" class="btn-group mr-2 my-2 btn btn-dark">EDIT</button>
+    </div>
+  
+    <!-- <a class="btn btn-dark btn-block mb-2" href="/ideas/edit/">Edit</a>
+      <form method="post" action="/ideas/?_method=DELETE">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="submit" class="btn btn-danger btn-block" value="Delete">
+      </form> -->
   </div>
+</ng-template>
+
+<ng-template #notDone>
+  <h3 class="card align-items-center card-body mb-2">No video ideas listed</h3>
+</ng-template>

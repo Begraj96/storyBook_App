@@ -10,6 +10,15 @@ import { RegisterComponent } from './storyComponent/register/register.component'
 import { NavbarComponent } from './storyComponent/navbar/navbar.component';
 import { IdeasComponent } from './storyComponent/videoIdea/ideas/ideas.component';
 import { AddIdeaComponent } from './storyComponent/videoIdea/add-idea/add-idea.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import {HttpClientModule} from '@angular/common/http'
+import { NgToastModule } from 'ng-angular-popup';
+import { IdeasUpdateComponent } from './storyComponent/ideas-update/ideas-update.component';
+import { LoadingComponent } from './storyComponent/loading/loading.component';
+import { NgxUiLoaderModule } from "ngx-ui-loader";
+import { NgxUiLoaderHttpModule } from "ngx-ui-loader";
+
 
 @NgModule({
   declarations: [
@@ -20,11 +29,22 @@ import { AddIdeaComponent } from './storyComponent/videoIdea/add-idea/add-idea.c
     RegisterComponent,
     NavbarComponent,
     IdeasComponent,
-    AddIdeaComponent
+    AddIdeaComponent,
+    PageNotFoundComponent,
+    IdeasUpdateComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule,
+    FormsModule,
+    HttpClientModule,
+    NgToastModule,
+    NgxUiLoaderModule,
+    NgxUiLoaderHttpModule.forRoot({
+      showForeground: true
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
